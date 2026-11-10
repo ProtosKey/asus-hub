@@ -7,16 +7,29 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 find_package(PkgConfig REQUIRED)
 pkg_check_modules(CJSON REQUIRED libcjson)
+pkg_check_modules(UDEV REQUIRED libudev)
 
 add_executable(asus-hub-daemon
+    src/cpu.c
+    src/fans.c
+    src/gpu.c
     src/main.c
     src/statistics.c
+    src/utils.c
+)
+
+target_link_libraries(asus-hub-daemon PRIVATE
+    ${CJSON_LIBRARIES}
+    ${UDEV_LIBRARIES}
 )
 
 target_include_directories(asus-hub-daemon PRIVATE
     include
     ${CJSON_INCLUDE_DIRS}
+    ${UDEV_INCLUDE_DIRS}
 )
 
-target_link_libraries(asus-hub-daemon PRIVATE ${CJSON_LIBRARIES})
-target_compile_options(asus-hub-daemon PRIVATE ${CJSON_CFLAGS_OTHER})
+target_compile_options(asus-hub-daemon PRIVATE
+    ${CJSON_CFLAGS_OTHER}
+    ${UDEV_CFLAGS_OTHER}
+)
