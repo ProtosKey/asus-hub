@@ -13,6 +13,10 @@ add_executable(asus-hub-daemon
     src/statistics.c
 )
 
-target_include_directories(asus-hub-daemon PRIVATE src ${CJSON_INCLUDE_DIRS})
+target_include_directories(asus-hub-daemon PRIVATE
+    include
+    ${CJSON_INCLUDE_DIRS}
+)
+
 target_link_libraries(asus-hub-daemon PRIVATE ${CJSON_LIBRARIES})
 target_compile_options(asus-hub-daemon PRIVATE ${CJSON_CFLAGS_OTHER})
